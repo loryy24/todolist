@@ -35,7 +35,16 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
+        ],
+        [
+            'name.required' => 'Le nom est requis',
+            'email.required' => 'L\'email est requis',
+            'email.email' => 'L\'email doit être valide',
+            'email.unique' => 'Cet email est déjà utilisé',
+            'password.required' => 'Le mot de passe est requis',
+            'password.min' => 'Le mot de passe doit contenir au moins 6 caractères',
+            'password.confirmed' => 'La confirmation du mot de passe ne correspond pas',
         ]);
 
         $user = User::create([
@@ -48,10 +57,14 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         Auth::logout();
+    
         $request->session()->invalidate();
+    
         $request->session()->regenerateToken();
-        return redirect('/login');
+    
+        return redirect('/');
     }
 }

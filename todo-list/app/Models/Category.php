@@ -8,10 +8,15 @@ class Category extends Model
 {
     protected $fillable = [
         'name',
+        'user_id',
         'color',
     ];
 
     public function tasks() {
-        $this->hasMany(Task::class);
+       return $this->hasMany(Task::class);
+    }
+   
+    public function user() {
+       return $this->belongsTo(User::class);
     }
 }

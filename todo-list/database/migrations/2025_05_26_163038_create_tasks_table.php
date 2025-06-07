@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('description');
             $table->date('due_date');
             $table->timestamps();
+            $table->enum('priority', [1,2,3])->default(1);
             $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             
         });
     }

@@ -80,6 +80,7 @@
 
             <button type="submit">S'inscrire</button>
         </form>
+        <p style='{text-align: center}'>vous avez deja un compte? <a href="{{ route('login') }}">Connectez-vous</a></p>
     </div>
 
 </body>

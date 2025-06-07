@@ -73,6 +73,7 @@
 
             <button type="submit">Se connecter</button>
         </form>
+        <p>vous n'avez pas de compte? <a href="{{ route('register') }}">S'inscrire</a></p>
     </div>
 
 </body>
