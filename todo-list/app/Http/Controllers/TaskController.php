@@ -12,6 +12,11 @@ class TaskController extends Controller
     /**
      * Crée une tâche pour une catégorie.
      */
+    public function index(Category $category)
+    {
+        return view('task', compact('category'));
+    }
+
     public function store(Request $request, $categoryId)
     {
         $validated = $request->validate([
@@ -26,7 +31,7 @@ class TaskController extends Controller
         $validated['category_id'] = $category->id;
         Task::create($validated);
 
-        return redirect()->route('categories.index')->with('success', 'Tâche ajoutée.');
+        return redirect()->route('tasks.index', $categoryId)->with('success', 'Tâche ajoutée.');
     }
 
     /**
@@ -42,21 +47,20 @@ class TaskController extends Controller
         ]);
 
         $task = Task::findOrFail($id);
-        $categoryId = $task->category_id;
 
         $task->update($validated);
 
-        return redirect()->route('categories.index')->with('success', 'Tâche mise à jour.');
+        return redirect()->route('tasks.index')->with('success', 'Tâche mise à jour.');
     }
 
     /**
      * Supprime une tâche.
      */
-    public function destroy($id)
+    public function destroy(Category $category,Task $task)
     {
-        $task = Task::findOrFail($id);
+        $categoryId = $task->category_id;
         $task->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Tâche supprimée.');
+        return redirect()->route('tasks.index', $categoryId)->with('success', 'Tâche supprimée.');
     }
 }

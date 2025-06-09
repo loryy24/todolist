@@ -15,16 +15,7 @@ Route::middleware('auth')->group( function (){
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::resource('categories', CategoryController::class);
 
-
-Route::get('/dashboard', [CategoryController::class, 'index'])->name('categories.index');
-
-Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-
-Route::post('/categories/{category}/tasks', [TaskController::class, 'store'])->name('tasks.store');
-Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+Route::resource('/categories/{category}/tasks', TaskController::class);
 
     
 });
