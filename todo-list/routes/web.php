@@ -5,11 +5,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TaskController;
 
-Route::get('/login', [AuthController::class, 'showLogin']);
+Route::middleware("guest")->group(function () {
+ Route::get('/login', [AuthController::class, 'showLogin']);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'register'])->name('register');
+});
 Route::middleware('auth')->group( function (){
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/logout', [AuthController::class, 'logout']);

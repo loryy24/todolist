@@ -45,7 +45,7 @@
             <form method="POST" action="{{ route('categories.destroy', $category->id) }}" style="display:inline-block">
                 @csrf
                 @method('DELETE')
-                <input type="submit" onclick="return confirm('Supprimer ?')" value="Supprimer">
+                <button type="submit" onclick="return confirm('Supprimer ?')" class="btn btn-danger" >Supprimer</button>
             </form>
             <a href="{{ route('tasks.index', $category->id) }}" class="btn btn-primary">Voir les tâches</a>
         </div>
@@ -54,5 +54,3 @@
     @endforelse
 </div>
 @endsection
- 
- Connexion à github.com...

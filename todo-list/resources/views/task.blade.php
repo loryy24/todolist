@@ -52,6 +52,9 @@
                     <option value="3">Élevée</option>
                 </select>
                 <button type="submit">Ajouter tâche</button>
+                @error('name') <div class="text-danger">{{ $message }}</div> @enderror
+                @error('description') <div class="text-danger">{{ $message }}</div> @enderror
+                @error('due_date') <div class="text-danger">{{ $message }}</div> @enderror
             </form>
         </div>
 </div>
