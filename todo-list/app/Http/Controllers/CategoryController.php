@@ -11,12 +11,15 @@ class CategoryController extends Controller
     /**
      * Affiche la liste des catégories dans le dashboard.
      */
- public function index()
-{
-    $categories = Category::with('tasks')->where('user_id', Auth::id())->get();
-    return view('dashboard', compact('categories'));
-}
+public function index()
+    {
+        $categories = Category::with('tasks')
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(5); // pagination ajoutée ici
 
+        return view('dashboard', compact('categories'));
+    }
 
     /**
      * Stocke une nouvelle catégorie.
@@ -25,11 +28,11 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required',
-            'color' => 'required|in:red,green,blue',
+            'color' => 'required|string',
         ], [
             'name.required' => 'Le nom est requis',
             'color.required' => 'La couleur est requise',
-            'color.in' => 'La couleur doit être rouge, verte ou bleue',
+            'color.in' => 'La couleur doit être choisie',
         ]);
 
         $validated['user_id'] = Auth::id();
@@ -47,11 +50,10 @@ class CategoryController extends Controller
 
         $validated = $request->validate([
             'name' => 'required',
-            'color' => 'required|in:red,green,blue',
+            'color' => 'required|string',
         ], [
             'name.required' => 'Le nom est requis',
             'color.required' => 'La couleur est requise',
-            'color.in' => 'La couleur doit être rouge, verte ou bleue',
         ]);
 
     $category->update($validated);

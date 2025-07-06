@@ -11,6 +11,8 @@ class Task extends Model
         'name',
         'description',
         'due_date',
+        'priority', // 1: haute, 2: moyenne, 3: basse
+       
     ];
 
     public function category() {

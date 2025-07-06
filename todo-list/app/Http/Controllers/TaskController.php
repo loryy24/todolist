@@ -33,25 +33,34 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index', $categoryId)->with('success', 'Tâche ajoutée.');
     }
+     
+    public function toggleStatus(Category $category, Task $task)
+{
+    $task->status = $task->status === 'terminée' ? 'en cours' : 'terminée';
+    $task->save();
+
+    return back()->with('success', 'Statut mis à jour.');
+}
 
     /**
      * Met à jour une tâche.
      */
-    public function update(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'due_date' => 'required|date',
-            'priority' => 'required|in:1,2,3'
-        ]);
+    public function update(Request $request, $categoryId, $taskId)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'due_date' => 'required|date',
+        'priority' => 'required|in:1,2,3'
+    ]);
 
-        $task = Task::findOrFail($id);
+    $category = Category::where('user_id', Auth::id())->findOrFail($categoryId);
+    $task = Task::where('category_id', $category->id)->findOrFail($taskId);
 
-        $task->update($validated);
+    $task->update($validated);
 
-        return redirect()->route('tasks.index')->with('success', 'Tâche mise à jour.');
-    }
+    return redirect()->route('tasks.index', $categoryId)->with('success', 'Tâche mise à jour.');
+}
 
     /**
      * Supprime une tâche.

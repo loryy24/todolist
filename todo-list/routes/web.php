@@ -13,10 +13,11 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 Route::middleware('auth')->group( function (){
     Route::get('/', [CategoryController::class, 'index']);
-    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('categories', CategoryController::class);
 
 Route::resource('/categories/{category}/tasks', TaskController::class);
+Route::put('tasks/{category}/{task}/status', [TaskController::class, 'toggleStatus'])->name('tasks.toggleStatus');
 
     
 });
