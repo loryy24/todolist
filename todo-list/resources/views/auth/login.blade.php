@@ -70,8 +70,15 @@
             @error('password')
                 <p>{{ $message }}</p>
             @enderror
+            <div style="margin:10px 0;">
+                <label style="font-size:0.95em; display: flex;  gap: 8px; justify-content: flex-start; width: 100%;">
+                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                    <span>Se rappeler de moi</span>
+                </label>
+            </div>
 
             <button type="submit">Se connecter</button>
+
         </form>
         <p>vous n'avez pas de compte? <a href="{{ route('register') }}">S'inscrire</a></p>
     </div>

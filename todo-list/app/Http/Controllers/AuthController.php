@@ -17,14 +17,19 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
+        ],
+        [
+            'email.required' => 'L\'email est requis',
+            'email.email' => 'L\'email doit être valide',
+            'password.required' => 'Le mot de passe est requis',
         ]);
-
-        if (Auth::attempt($credentials)) {
+        $remember = $request->filled('remember');
+        if (Auth::attempt($credentials,$remember)) {
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
 
-        return back()->withErrors(['email' => 'Email ou mot de passe incorrect']);
+    return back()->withErrors(['email' => 'Email ou mot de passe incorrect']);
     }
 
     public function showRegister() {
