@@ -19,6 +19,9 @@ Route::middleware('auth')->group( function (){
 Route::resource('/categories/{category}/tasks', TaskController::class);
 Route::put('tasks/{category}/{task}/status', [TaskController::class, 'toggleStatus'])->name('tasks.toggleStatus');
 
+Route::get('/tasks', [TaskController::class, 'allTasks'])->name('tasks.all');
+    Route::get('/profile', [AuthController::class, 'editProfile'])->name('profile.edit');
+    Route::post('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
     
 });
 

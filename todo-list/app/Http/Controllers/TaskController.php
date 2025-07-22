@@ -63,6 +63,21 @@ class TaskController extends Controller
 }
 
     /**
+     * Affiche toutes les tâches de l'utilisateur.
+     */
+public function allTasks()
+{
+    $tasks = \App\Models\Task::with('category')
+        ->whereHas('category', function($q){
+            $q->where('user_id', Auth::id());
+        })
+        ->latest()
+        ->get();
+
+    return view('tasks_all', compact('tasks'));
+}
+
+    /**
      * Supprime une tâche.
      */
     public function destroy(Category $category,Task $task)
